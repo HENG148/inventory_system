@@ -12,16 +12,13 @@ public class AuthRequest {
     @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Username can ony contain letters, number and underscores")
     private String username;
 
-    @NotBlank(message="Email is required")
-    @Email(message="Invalid email format")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message="Password is required")
-    @Size(min=8, message="Password must be at least 8 characters")
-    @Pattern(
-      regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$",
-          message="Password must contain at least one digit, one lowercase, one uppercase, and one special character"
-    )
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$", message = "Password must contain at least one digit, one lowercase, one uppercase, and one special character")
     private String password;
 
     private String role;
@@ -57,42 +54,42 @@ public class AuthRequest {
     public void setRole(String role) {
       this.role = role;
     }
+  }
+  
+  public static class Login {
+    @NotBlank(message = "Username or email is required")
+    private String usernameOrEmail;
 
-    public static class Login {
-      @NotBlank(message = "Username or email is required")
-      private String usernameOrEmail;
+    @NotBlank(message = "Password is required")
+    private String password;
 
-      @NotBlank(message = "Password is required")
-      private String password;
-
-      public String getUsernameOrEmail() {
-        return usernameOrEmail;
-      }
-
-      public void setUsernameOrEmail(String usernameOrEmail) {
-        this.usernameOrEmail = usernameOrEmail;
-      }
-
-      public String getPassword() {
-        return password;
-      }
-
-      public void setPassword(String password) {
-        this.password = password;
-      }
+    public String getUsernameOrEmail() {
+      return usernameOrEmail;
     }
+
+    public void setUsernameOrEmail(String usernameOrEmail) {
+      this.usernameOrEmail = usernameOrEmail;
+    }
+
+    public String getPassword() {
+      return password;
+    }
+
+    public void setPassword(String password) {
+      this.password = password;
+    }
+  }
     
-    public static class RefreshToken {
-      @NotBlank(message="Refresh token is required")
-      private String refreshToken;
+  public static class RefreshToken {
+    @NotBlank(message = "Refresh token is required")
+    private String refreshToken;
 
-      public String getRefreshToken() {
-        return refreshToken;
-      }
+    public String getRefreshToken() {
+      return refreshToken;
+    }
 
-      public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-      }
+    public void setRefreshToken(String refreshToken) {
+      this.refreshToken = refreshToken;
     }
   }
 }

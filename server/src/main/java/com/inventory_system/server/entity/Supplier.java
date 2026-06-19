@@ -16,35 +16,36 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name="suppliers")
+public class Supplier {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  @Column(nullable = false, unique = true, length = 100)
+  @Column(nullable = false, length = 150)
   private String name;
-
+  @Column(unique=true, length=100)
+  private String email;
+  @Column(length = 20)
+  private String phone;
   @Column(columnDefinition = "TEXT")
-  private String description;
-
+  private String address;
   @Column(name = "created_at", nullable = false, updatable = false)
   private LocalDateTime createdAt;
-
   @Column(name = "updated_at", nullable = false)
   private LocalDateTime updatedAt;
-
-  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
   private List<Product> products = new ArrayList<>();
 
-  public Category() {
+  public Supplier() {
   }
 
-  public Category(Long id, String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt,
-      List<Product> products) {
+  public Supplier(Long id, String name, String email, String phone, String address, LocalDateTime createdAt,
+      LocalDateTime updatedAt, List<Product> products) {
     this.id = id;
     this.name = name;
-    this.description = description;
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.products = products != null ? products : new ArrayList<>();
@@ -68,23 +69,36 @@ public class Category {
   public void setId(Long id) {
     this.id = id;
   }
-
-  public String getName() {
-    return name;
-  }
+  public String getName() { return name; }
 
   public void setName(String name) {
     this.name = name;
   }
-
-  public String getDescription() {
-    return description;
+ 
+  public String getEmail() {
+    return email;
   }
 
-  public void setDecription(String description) {
-    this.description = description;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+ 
+  public String getPhone() {
+    return phone;
   }
 
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+ 
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+ 
   public LocalDateTime getCreatedAt() {
     return createdAt;
   }
@@ -92,7 +106,7 @@ public class Category {
   public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;
   }
-
+ 
   public LocalDateTime getUpdatedAt() {
     return updatedAt;
   }
@@ -100,7 +114,7 @@ public class Category {
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
-
+ 
   public List<Product> getProducts() {
     return products;
   }
@@ -116,7 +130,9 @@ public class Category {
   public static class Builder {
     private Long id;
     private String name;
-    private String description;
+    private String email;
+    private String phone;
+    private String address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<Product> products = new ArrayList<>();
@@ -131,8 +147,18 @@ public class Category {
       return this;
     }
 
-    public Builder description(String description) {
-      this.description = description;
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    public Builder phone(String phone) {
+      this.phone = phone;
+      return this;
+    }
+
+    public Builder address(String address) {
+      this.address = address;
       return this;
     }
 
@@ -151,8 +177,8 @@ public class Category {
       return this;
     }
 
-    public Category build() {
-      return new Category(id, name, description, createdAt, updatedAt, products);
+    public Supplier build() {
+      return new Supplier(id, name, email, phone, address, createdAt, updatedAt, products);
     }
   }
 }

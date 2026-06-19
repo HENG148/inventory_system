@@ -21,9 +21,9 @@ public class AuthResponse {
     this.user = user;
   }
 
-  public static AuthResponse of(String accessToken, String refreshToken, String tokenType, Long expiredIn,
+  public static AuthResponse of(String accessToken, String refreshToken, Long expiredIn,
       UserResponse user) {
-    return new AuthResponse(accessToken, refreshToken, tokenType, expiredIn, user);
+    return new AuthResponse(accessToken, refreshToken, "Bearer", expiredIn, user);
   }
 
   public String getAccessToken() {
