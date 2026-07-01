@@ -35,12 +35,29 @@ public class CategoryServiceImpl {
         .build();
     return CategoryResponse.from(categoryRepository.save(category));
   }
+
+  @Transactional
+  public CategoryResponse update(Long id, CategoryReq req) {
+    Category category = findById(id);
+    if (!category.getName().equalsIgnoreCase(req.getName())
+        && categoryRepository.existByNameIgnoreCase(req.getName())) {
+      throw new DuplicateResourceException("Category '" + req.getName() + "' already exists");
+    }
+    category.setName(req.getName());
+    category.setDecription(req.getDescription());
+    return CategoryResponse.from(categoryRepository.save(category));
+  }
   
   @Transactional
   public void delete(Long id) {
     Category category = findById(id);
     categoryRepository.delete(category);
     log.info("Deleted category id={}", id);
+  }
+
+  @Transactional(readOnly = true)
+  public CategoryResponse getById(Long id) {
+    return CategoryResponse.from(findById(id));
   }
 
   @Transactional(readOnly = true)
